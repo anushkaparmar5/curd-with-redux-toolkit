@@ -1,30 +1,38 @@
-import Button from 'react-bootstrap/Button';
 import Form from 'react-bootstrap/Form';
 import Modal from 'react-bootstrap/Modal';
+import CustomButton from '../CustomButton';
 
-function CustomModel({ show, handleClose, children }) {
+function CustomModel({ show, handleClose, onSubmit, children, modalHeading, modalType = "add", isLoading = false }) {
 
     return (
-        <>
-            <Modal show={show} onHide={handleClose}>
-                <Modal.Header closeButton>
-                    <Modal.Title>Modal heading</Modal.Title>
-                </Modal.Header>
-                <Modal.Body>
-                    <Form>
-                        {children}
-                        <Modal.Footer>
-                            <Button variant="secondary" onClick={handleClose}>
-                                Close
-                            </Button>
-                            <Button variant="primary" onClick={handleClose}>
-                                Save Changes
-                            </Button>
-                        </Modal.Footer>
-                    </Form>
-                </Modal.Body>
-            </Modal>
-        </>
+        <Modal
+            show={show}
+            onHide={handleClose}
+            backdrop="static"
+            keyboard={false}
+        >
+            {modalHeading ? <Modal.Header closeButton>
+                <Modal.Title>{modalHeading}</Modal.Title>
+            </Modal.Header> : null}
+            <Modal.Body>
+                <Form onSubmit={onSubmit}>
+                    {children}
+                    <Modal.Footer>
+                        <CustomButton
+                            variant="secondary"
+                            onClick={handleClose}
+                            text={modalType === 'delete' ? "No" : "Close"}
+                        />
+                        <CustomButton
+                            isLoading={isLoading}
+                            variant="primary"
+                            type='submit'
+                            text={modalType === 'edit' ? "Edit" : modalType === 'delete' ? "Yes" : "Add"}
+                        />
+                    </Modal.Footer>
+                </Form>
+            </Modal.Body>
+        </Modal>
     );
 }
 
