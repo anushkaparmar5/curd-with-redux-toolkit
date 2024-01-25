@@ -3,7 +3,7 @@
 # Required node version
 ## node version: v20.10.0
 
-# For install dependances 
+# For install dependence 
 ## npm i
 
 # Run project
